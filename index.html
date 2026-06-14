@@ -109,8 +109,8 @@ header{background:var(--bg);padding:12px 20px 10px;display:flex;align-items:cent
 .empty p{font-size:13px;color:var(--muted);line-height:1.6;}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,6,3,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(201,150,58,0.12);padding:8px 0 calc(env(safe-area-inset-bottom,0px) + 4px);display:flex;z-index:50;}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:6px 0;-webkit-tap-highlight-color:transparent;}
-.nav-icon{font-size:20px;line-height:1;}
-.nav-label{font-size:10px;font-weight:500;color:var(--muted);}
+.nav-icon{font-size:20px;line-height:1;pointer-events:none;}
+.nav-label{font-size:10px;font-weight:500;color:var(--muted);pointer-events:none;}
 .nav-btn.active .nav-label{color:var(--gold);}
 .nav-btn.active .nav-icon{filter:drop-shadow(0 0 4px rgba(201,150,58,0.5));}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end;justify-content:center;}
