@@ -342,7 +342,14 @@ header{background:var(--bg);padding:12px 20px 10px;display:flex;align-items:cent
 <div class="modal-bg" id="save-modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">Tilføj opsparing ☕</div>
+    <div class="modal-title">Opsparing ☕</div>
+    <div class="field">
+      <label>Type</label>
+      <select id="save-type">
+        <option value="add">+ Tilføj til opsparing</option>
+        <option value="remove">− Fjern fra opsparing</option>
+      </select>
+    </div>
     <div class="field"><label>Beløb (kr.)</label><div class="amount-row"><input type="number" id="save-amount" placeholder="0" min="0" inputmode="numeric"><span>kr.</span></div></div>
     <div class="field"><label>Note (valgfri)</label><input type="text" id="save-note" placeholder="f.eks. sprang restaurantbesøg over"></div>
     <div class="modal-btns"><button class="btn-cancel" onclick="closeModals()">Annuller</button><button class="btn-save" onclick="saveSavings()">Gem</button></div>
@@ -470,6 +477,7 @@ function closeModals(){
   document.querySelectorAll('.modal-bg').forEach(m=>m.classList.remove('open'));
   ['skip-name','skip-amount','save-amount','save-note','wish-name','wish-price','wish-emoji','wish-notes']
     .forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  const st=document.getElementById('save-type'); if(st) st.value='add';
 }
 document.querySelectorAll('.modal-bg').forEach(bg=>bg.addEventListener('click',e=>{ if(e.target===bg) closeModals(); }));
 
@@ -486,10 +494,17 @@ function saveSkip() {
 
 function saveSavings() {
   const amount=parseFloat(document.getElementById('save-amount').value)||0;
+  const type=document.getElementById('save-type').value;
   if(amount<=0){ showToast('Indtast et beløb'); return; }
-  state.saved+=amount;
-  updateStreak(); persist(); closeModals(); render();
-  showToast('+'+fmt(amount)+' gemt ☕');
+  if(type==='remove') {
+    state.saved=Math.max(0, state.saved-amount);
+    updateStreak(); persist(); closeModals(); render();
+    showToast('−'+fmt(amount)+' fjernet');
+  } else {
+    state.saved+=amount;
+    updateStreak(); persist(); closeModals(); render();
+    showToast('+'+fmt(amount)+' gemt ☕');
+  }
 }
 
 function saveWish() {
